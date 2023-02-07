@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Vieww Holiday{% endblock %}
+
+{% block content %}
+    
+    <h2 style="text-align: center;">Holiday Records</h2>
+    <div id ="hol_table">
+    <table style="border-collapse: collapse; width: 60%; margin-left: auto;
+  margin-right: auto;" border="1">
+        <tbody>
+        <tr>
+        <th style="width: 25%;">Date</th>
+        <th style="width: 25%;">Holiday</th>
+        </tr>
+	{% for date, hol in holiday_list %}
+		<tr>
+        	<td style="text-align:center">{{date}}</td>
+        	<td style="text-align:center">{{ hol }}</td>
+    		</tr>
+	{% endfor %}
+	</tbody>
+     </table>
+     </div>
+    <br></br>
+    <div class='edit_message'>
+    {% if message %}
+        <p style="text-align: right;">{{ message }}</p>
+    {% endif %}
+    </div>
+
+    <form action="" method="POST">
+        <p style="text-align: right;"> 
+           <label for="date">Date</label>
+           <input type="date" name = "date" value="" required> 
+           <label for="holiday">Holiday</label>
+           <input type="text" name = "holiday" value="" required>  
+        </p>
+        <p style="text-align: right;"><input type="submit" value="Add Holiday">
+     </form>
+{% endblock %}

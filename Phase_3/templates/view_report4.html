@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}View Outdoor Furniture on Groundhog Day{% endblock %}
+
+{% block content %}
+    
+    <h2 style="text-align: center;">Outdoor Furniture Sold on Groundhog Day Table</h2>
+    <div id ="out_table">
+    <table style="border-collapse: collapse; width: 60%; margin-left: auto;
+  margin-right: auto;" border="1">
+        <tbody>
+        <tr>
+        <th style="width: 12%;">Outdoor Furniture Quantity Sold on Groundhog Day</th>
+        <th style="width: 12%;">Total Outdoor Furniture Quantity Sold</th>
+        <th style="width: 12%;">Average Outdoor Furniture Quantity Sold</th>
+        <th style="width: 12%;">Year</th>
+        </tr>
+	{% for out_fur, total, avg, yr in out_list %}
+		<tr>
+        	<td style="text-align:center">{{ out_fur }}</td>
+            <td style="text-align:center">{{ total }}</td>
+            <td style="text-align:center">{{ avg }}</td>
+        	<td style="text-align:center">{{ yr }}</td>
+    		</tr>
+	{% endfor %}
+	</tbody>
+     </table>
+     </div>
+    <br></br>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}View Store Revenue by Year by State{% endblock %}
+
+{% block content %}
+
+<h2 style="text-align: center;">Store Revenue by Year</h2>
+
+<form action="" method="POST">
+  <label for="S_Y" style="color: #043078;">Choose a State and a Year:</label>
+  <p style="text-align: left;"> 
+    <select id="year_selected" name="year_selected" value="year_selected" class="selectpicker form-control">
+      {% for year_selected in yearlist %}
+      <option value="{{ year_selected }}" selected='year_selected'>{{ year_selected }}</option>
+      {% endfor %}
+    </select>
+    <select id="state_selected" name="state_selected" value="state_selected" class="selectpicker form-control">
+        {% for state_selected in statelist %}
+        <option value="{{ state_selected }}" selected='state_selected'>{{ state_selected }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="submit" style="color: #043078;"/>
+  </form>
+
+    <br> </br>
+    <br> </br>
+    <div id ="revenue_table">
+    <table style="border-collapse: collapse; width: 60%; margin-left: auto;
+  margin-right: auto;" border="1">
+        <tbody>
+        <tr>
+          <th style="width: 20%;">store_ID</th>
+          <th style="width: 20%;">street_address</th>
+          <th style="width: 20%;">city_name</th>
+          <th style="width: 20%;">state</th>
+          <th style="width: 20%;">Revenue</th>
+          <th style="width: 20%;">Year</th>
+        </tr>
+          {% for Store_ID, street_address, city_name,state,Revenue, Year in revenue_list %}
+        <tr>
+          <td style="text-align:center">{{ Store_ID }}</td>
+        	<td style="text-align:center">{{ street_address }}</td>
+          <td style="text-align:center">{{ city_name }}</td>
+          <td style="text-align:center">{{ state }}</td>
+          <td style="text-align:center">{{ Revenue }}</td>
+          <td style="text-align:center">{{ Year }}</td>
+        </tr>
+        {% endfor %}
+	
+	  </tbody>
+     </table>
+     </div>
+    <br> </br>
+    <br> </br>
+  {% endblock %}
+

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}View Revenue by Population{% endblock %}
+
+{% block content %}
+
+    <h2 style="text-align: center;">View Revenue by Population</h2>
+    <div id ="report6_table">
+    <table style="border-collapse: collapse; width: 60%; margin-left: auto;
+  margin-right: auto;" border="1">
+        <tbody>
+        <tr>
+        <th style="width: 25%;">Small</th>
+        <th style="width: 25%;">Medium</th>
+        <th style="width: 25%;">Large</th>
+        <th style="width: 25%;">Extra Large</th>
+        </tr>
+	{% for Small, Medium, Large, Extra_Large in result_list %}
+		<tr>
+        	<td style="text-align:center">{{Small}}</td>
+            <td style="text-align:center">{{ Medium }}</td>
+            <td style="text-align:center">{{Large}}</td>
+        	<td style="text-align:center">{{Extra_Large}}</td>
+    		</tr>
+	{% endfor %}
+
+	</tbody>
+     </table>
+     </div>
+    <br></br>
+
+{% endblock %}

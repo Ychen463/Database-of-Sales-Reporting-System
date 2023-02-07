@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}View Category{% endblock %}
+
+{% block content %}
+    
+    <h2 style="text-align: center;">Category Table</h2>
+    <div id ="pop_table">
+    <table style="border-collapse: collapse; width: 60%; margin-left: auto;
+  margin-right: auto;" border="1">
+        <tbody>
+        <tr>
+        <th style="width: 12%;">Category_Name</th>
+        <th style="width: 12%;">Product_number</th>
+        <th style="width: 12%;">min_retail_price</th>
+        <th style="width: 12%;">avg_retail_price</th>
+        <th style="width: 12%;">max_retail_price</th>
+        </tr>
+	{% for cat, p_cnt, min_pri,avg_pri,max_pri in cat_list %}
+		<tr>
+        	<td style="text-align:center">{{ cat }}</td>
+        	<td style="text-align:center">{{ p_cnt }}</td>
+        	<td style="text-align:center">{{ min_pri }}</td>
+            <td style="text-align:center">{{ avg_pri }}</td>
+            <td style="text-align:center">{{ max_pri }}</td>
+    		</tr>
+	{% endfor %}
+	</tbody>
+     </table>
+     </div>
+    <br></br>
+
+{% endblock %}

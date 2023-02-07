@@ -1,0 +1,9 @@
+SELECT COUNT(store_ID) FROM Store;
+
+SELECT COUNT(store_ID) FROM Store_StoreAffiliates WHERE store_id in (SELECT store_ID FROM Store_StoreAffiliates WHERE store_affiliates IN ('Restuarant','Snack bar'));
+
+SELECT COUNT(store_ID) FROM Store WHERE childcare_limit > 0;
+
+SELECT COUNT(PID) FROM Product;
+
+SELECT COUNT(DISTINCT ad_campaign_description) FROM  AdCampaign;

@@ -1,0 +1,27 @@
+SELECT COUNT(DISTINCT ad_compaign_description)
+FROM AdCampaign;
+
+SELECT COUNT(PID)
+FROM Product;
+
+SELECT COUNT(store_ID)
+FROM Store;
+
+SELECT COUNT(store_ID)
+FROM Store
+WHERE childcare_limit>0;
+
+SELECT COUNT(store_ID)
+FROM Store
+WHERE store_id in ('Restuarant','Snack bar');
+
+----------------------------------------------------------
+Changes in Schema:
+1. Add Date Table
+2. Add FOREIGN KEY(day) REFERENCES Day(day)  to table Sales, Discount Price, Holiday, adcampaign
+3. Delete StoreAffiliates table
+4. Add resturant, snack bar to store table
+5. Delete City table (city_id AND city_size is gone, not sure where to put city_size- population, added a trigger/not done yet)
+6. Add city_name, state to store table
+7. Add Population table ( city_name, state, population)
+8. Sales table deleted saleID

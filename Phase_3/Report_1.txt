@@ -1,0 +1,7 @@
+SELECT Category.Category_name, SUM(Product.PID), AVG(Product.regular_price), MIN(Product.regular_price)
+FROM Category
+LEFT JOIN Product_Category ON Category.Category_name = Product_Category.Category_name
+LEFT JOIN Product ON Product_Category.PID = Product.PID
+GROUP BY Category_name
+
+ORDER BY Category_name ASC;

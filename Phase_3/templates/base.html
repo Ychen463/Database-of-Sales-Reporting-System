@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title> LSRS system by team030</title>
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet"  href="../static/style.css"> </link>
+</head>
+
+<body>
+  <div id="title_box">
+    <h1 style="color: #5e9ca0; text-align: left;">LEOFURN Sales Reporting System</h1>
+    <p style="text-align: left;">This system is designed to provide a consolidated view of the products offered and sold in all LEOFURN stores across the country, and support executive team decisions via data report.</p>
+  </div>
+
+  <div id="side_nav">
+    <ul>
+    <br></br>
+      <li> <a href="/">Overall Statistics</a></li>
+      <li> <a href="/view_pop">View Population</a></li>
+      <li> <a href="/view_holiday">View Holiday</a></li>
+      <li> <p id ="report_sep"> View Analysis Reports </p></li>
+      <ul class = "reports_list">
+      	<li> <a class = "reports_list" href="/view_report1">View Category Report</a></li>
+      	<li> <a class = "reports_list" href="/view_report2">View Actual versus Predicted Revenue for Couches and Sofas</a></li>
+      	<li> <a class = "reports_list" href="/view_report3">View Store Revenue by Year by State</a></li>
+      	<li> <a class = "reports_list" href="/view_report4">View Outdoor Furniture on Groundhog Day</a></li>
+      	<li> <a class = "reports_list" href="/view_report5">View State with Highest Volume for each Category</a></li>
+      	<li> <a class = "reports_list" href="/view_report6">View Revenue by Population</a></li>
+      	<li> <a class = "reports_list" href="/view_report7">View Childcare Sales Volume</a></li>
+      	<li> <a class = "reports_list" href="/view_report8">View Restaurant Impact on Category Sales</a></li>
+      	<li> <a class = "reports_list" href="/view_report9">View Advertising Campaign Analysis</a></li>
+      </ul>
+    </ul>
+  </div>
+  
+  <div id="main_content">
+  {% block content %}
+  {% endblock content %}
+  </div>
+
+  
+</body>
+
+</html>

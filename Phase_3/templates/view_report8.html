@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}View Restaurant Impact on Category Sales{% endblock %}
+
+{% block content %}
+    
+    <h2 style="text-align: center;">Restaurant Impact on Category Sales</h2>
+    <div id ="resimp_table">
+    <table style="border-collapse: collapse; width: 60%; margin-left: auto;
+  margin-right: auto;" border="1">
+        <tbody>
+        <tr>
+        <th style="width: 30%;">Category</th>
+        <th style="width: 40%;">Store Type</th>
+	<th style="width: 30%;">Quantity Sold</th>
+        </tr>
+	{% for cat, ty, quant in resimp_list %}
+		{% if ty == 'Non-Restaurant' %}
+			<tr>
+			<td style="text-align:center"rowspan="2">{{cat}}</td>
+    			<td style="text-align:center">Non-restaurant</td>
+    			<td style="text-align:center">{{quant}}</td>
+	       	        </tr>
+		{% else %}
+			<tr>
+        		<td style="text-align:center">Restaurant</td>
+        		<td style="text-align:center">{{quant}}</td>
+    			</tr>
+		{% endif %}
+	{% endfor %}
+	</tbody>
+    </table>
+    </div>
+    <br></br>
+{% endblock %}

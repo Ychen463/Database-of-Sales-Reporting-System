@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}View State with Highest Volume for each Category{% endblock %}
+
+{% block content %}
+
+<h2 style="text-align: center;">View State with Highest Volume for each Category</h2>
+
+
+<form action="" method="POST">
+  <label for="Y_M" style="color: #043078;">Choose Year and Month:</label>
+  <p style="text-align: left;"> 
+    <select id="year_selected" name="year_selected" value="year_selected" class="selectpicker form-control">
+        {% for year_selected in yearlist %}
+        <option value="{{ year_selected }}" selected='year_selected'>{{ year_selected }}</option>
+        {% endfor %}
+    </select>
+      <select id="month_selected" name="month_selected" value="month_selected" class="selectpicker form-control">
+          {% for month_selected in monthlist %}
+          <option value="{{ month_selected }}" selected='month_selected'>{{ month_selected }}</option>
+          {% endfor %}
+      </select>
+    <input type="submit" value="submit" style="color: #043078;"/>
+  </form>
+
+    <br> </br>
+    <br> </br>
+
+    <div id ="CatSoldHighest_table">
+    <table style="border-collapse: collapse; width: 60%; margin-left: auto;
+  margin-right: auto;" border="1">
+        <tbody>
+        <tr>
+          <th style="width: 20%;">category_name</th>
+          <th style="width: 20%;">number_sold</th>
+          <th style="width: 20%;">Year</th>
+          <th style="width: 20%;">Month</th>
+          <th style="width: 20%;">state</th>
+        </tr>
+          {% for category_name, state_total_sold, Year, Month,state in result_list %}
+
+        <tr>
+          <td style="text-align:center">{{ category_name }}</td>
+          <td style="text-align:center">{{ state_total_sold }}</td>
+          <td style="text-align:center">{{ Year }}</td>
+          <td style="text-align:center">{{ Month }}</td>
+          <td style="text-align:center">{{ state }}</td>
+        </tr>
+        {% endfor %}
+	
+	  </tbody>
+     </table>
+     </div>
+
+
+
+
+
+  {% endblock %}
+

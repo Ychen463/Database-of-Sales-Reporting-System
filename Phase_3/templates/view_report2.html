@@ -1,0 +1,45 @@
+{% endblock %} -->
+{% extends "base.html" %}
+{% block title %}View Actual versus Predicted Revenue for Couches and Sofas{% endblock %}
+
+{% block content %}
+    
+    <h2 style="text-align: center;">Actual versus Predicted Revenue for Couches and Sofas</h2>
+    <div id ="act_table">
+    <table style="border-collapse: collapse; width: 60%; margin-left: auto;
+  margin-right: auto;" border="1">
+        <tbody>
+        <tr>
+        <th style="width: 10%;">PID</th>
+	<th style="width: 12%;">productname</th>
+        <th style="width: 12%;">category name</th>
+        <th style="width: 12%;">Sales date</th>
+	<th style="width: 12%;">quantity sold</th>
+        <th style="width: 12%;">predicted quantity sold</th>
+        <th style="width: 12%;">regular price</th>
+	<th style="width: 12%;">discount price</th>
+        <th style="width: 12%;">regular revenue</th>
+        <th style="width: 12%;">predicted revenue</th>
+        <th style="width: 12%;">difference in revenue</th>
+	</tr>
+	{% for PID, product_name, category_name,day,quantity_sold,predicted_quantity_sold,regular_price,discount_price,regular_revenue,predicted_revenue,difference_in_revenue in result_list %} 
+		<tr>
+        	<td style="text-align:center">{{ PID }}</td>
+        	<td style="text-align:center">{{ product_name }}</td>
+        	<td style="text-align:center">{{ category_name }}</td>
+		<td style="text-align:center">{{ day }}</td>
+        	<td style="text-align:center">{{ quantity_sold }}</td>
+        	<td style="text-align:center">{{ predicted_quantity_sold }}</td>
+		<td style="text-align:center">{{ regular_price }}</td>
+        	<td style="text-align:center">{{ discount_price }}</td>
+        	<td style="text-align:center">{{ regular_revenue }}</td>
+		<td style="text-align:center">{{ predicted_revenue }}</td>
+        	<td style="text-align:center">{{ difference_in_revenue }}</td>
+    		</tr>
+	{% endfor %}
+	</tbody>
+     </table>
+     </div>
+    <br></br>
+
+{% endblock %}

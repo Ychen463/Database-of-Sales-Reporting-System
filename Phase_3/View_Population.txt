@@ -1,0 +1,17 @@
+SELECT city_name, population
+FROM City;
+
+
+UPDATE City
+SET population = $population,
+        city_size = CASE WHEN $population < 3700000 THEN 'Small'
+			  WHEN $population <6700000 THEN 'Medium'
+			  WHEN $population <9000000 THEN 'Large'
+			   ELSE 'Extra Large' END
+
+WHERE city_name=$city;
+
+
+SELECT city_name, population
+FROM City
+WHERE city_name = $city;

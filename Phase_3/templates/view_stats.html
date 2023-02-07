@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Overall Statistics{% endblock %}
+
+{% block content %}
+
+    <h2 style="text-align: center;">Overall Statistics</h2>
+    <div id ="hol_table">
+    <table style="border-collapse: collapse; width: 60%; margin-left: auto;
+  margin-right: auto;" border="1">
+        <tbody>
+        <tr>
+        <th style="width: 25%;">Statists Name</th>
+        <th style="width: 25%;">Counts</th>
+        </tr>
+	{% for ind, cnt in stat_list %}
+		<tr>
+        	<td style="text-align:center">{{ind}}</td>
+        	<td style="text-align:center">{{ cnt }}</td>
+    		</tr>
+	{% endfor %}
+
+	</tbody>
+     </table>
+     </div>
+    <br></br>
+
+{% endblock %}

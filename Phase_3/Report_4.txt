@@ -1,0 +1,22 @@
+WITH outdoor_furniture_sold AS
+(SELECT quanlity_sold
+FROM Sales
+INNER JOIN Sales_Product ON Sales.saleID = Sales_Product.saleID
+INNER JOIN Product_Category ON Sales_Product.PID = Product_Category.PID
+WHERE Product_Category.category_name = “Outdoor Furniture”),
+
+groudhogday_furniture_sold AS
+(SELECT Year(Date) AS Year, SUM(quanlity_sold) AS groundhog_sold
+FROM outdoor_furniture_sold
+WHERE Month(Date) = 2 AND Day(Date) = 2
+GROUP BY Year),
+
+total_avg_sold AS
+(SELECT Year(Date) AS Year, SUM(quantity_sold) AS total_sold, (SUM(quanlity_sold)/365) AS avg_sold
+FROM outdoor_furniture_sold)
+GROUP BY Year)
+
+SELECT groudhogday_furniture_sold.Year, groudhogday_furniture_sold.groundhog_sold, total_sold, avg_sold
+FROM total_avg_sold
+LEFT JOIN  groudhogday_furniture_sold ON groudhogday_furniture_sold.Year = total_avg_sold.Year
+ORDER BY Year ASC;

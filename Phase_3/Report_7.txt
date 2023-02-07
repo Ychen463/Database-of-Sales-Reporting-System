@@ -1,0 +1,28 @@
+SELECT *
+FROM
+(
+SELECT month, childcare_limit, SUM(total_sold) as total_sales
+FROM (
+SELECT MONTH(Sales.day) as month, Store.childcare_limit, SUM(Sales.quantity_sold*Product.regular_price) AS total_sold
+FROM Sales, Sales_Product, Product, Store
+WHERE Sales.saleID = Sales_Product.saleID
+             AND Sales_Product.PID = Product.PID
+             AND Sales.storeID = Store.storeID
+             AND (Sales_Product.PID, Sales.day) not in (SELECT PID, day FROM DiscountPrice)
+             AND Sales.day BETWEEN NOW()-365 AND NOW()
+GROUP BY MONTH(Sales.day), Store.childcare_limit
+UNION  ALL
+SELECT MONTH(Sales.day) as month, Store.childcare_limit, SUM(Sales.quantity_sold*DiscountPrice.discount_price) AS total_sold
+FROM Sales, Sales_Product, Product, Store, DiscountPrice
+WHERE Sales.saleID = Sales_Product.saleID
+             AND Sales_Product.PID = Product.PID
+             AND Sales.storeID = Store.storeID
+             AND Product.PID = DiscountPrice.PID
+             AND Sales.day = DisountPrice.day
+             AND Sales.day BETWEEN NOW()-365 AND NOW()
+GROUP BY MONTH(Sales.day), Store.childcare_limit) AS tol_sales
+GROUP BY month, childcare_limit
+ORDER BY month, childcare_limit) AS sales_data
+
+PIVOT (SUM(IFNULL(total_sales,0))  FOR childcare_limit in (SELECT DISTINCT childcare_limit FROM Store) ) AS p_sales_data
+ORDER BY month;

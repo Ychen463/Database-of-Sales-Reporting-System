@@ -1,0 +1,41 @@
+
+WITH sale_item AS
+(SELECT  Product.PID, DiscountPrice.day AS sale_date, DiscountPrice.discount_price AS sale_price
+FROM Product
+INNER JOIN DiscountPrice ON DiscountPrice.PID = Product.PID
+WHERE DiscountPrice.day in (SELECT day FROM AdCampaign WHERE ad_campaign_description IS NOT NULL)
+),
+compaign_sold AS
+(SELECT sale_items.PID, SUM(Sales.quantity_sold) as total_sale_quantity
+FROM Sales,  Sales_Product, sale_items
+WHERE Sales.saleID = Sales_Product.saleID
+AND Sales_Product.ID = sale_items.PID
+AND Sales.day = sale_items.sale_day
+GROUP BY sale_items.PID),
+
+regular_sold AS
+(SELECT sale_items.PID, SUM(Sales.quantity_sold) as total_sale_quantity
+FROM Sales,  Sales_Product, sale_items
+WHERE Sales.saleID = Sales_Product.saleID
+AND Sales_Product.PID = sale_items.PID
+AND Sales.day != sale_items.sale_date
+GROUP BY sale_items.PID),
+Diff as
+(SELECT compaign_sold.PID, total_sale_quantity, total_reg_quantity (total_sale_quantity - total_reg_quantity) AS diff
+FROM compaign_sold, regular_sold
+WHERE compaign_sold.PID = regular_sold.PID)
+
+SELECT *
+FROM(
+SELECT Diff.PID, product_name, total_sale_quantity, total_reg_quantity, difference
+FROM Diff
+JOIN Product ON Diff.PID = Product.PID
+ORDER BY Diff.difference DESC  LIMIT 10
+UNION
+SELECT Diff.PID, product_name, total_sale_quantity, total_reg_quantity, difference
+FROM Diff
+JOIN Product ON Diff.PID = Product.PID
+ORDER BY Diff.difference LIMIT 10
+) t
+ORDER BY difference DESC;
+

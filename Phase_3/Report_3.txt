@@ -1,0 +1,30 @@
+SELECT store_ID, street_address, city_name
+FROM Store;
+
+
+SELECT (Revenue1+Revenue2) AS Revenue, Year
+FROM
+(
+(SELECT SUM(Sales.quanlity_sold*DiscountPrice.Discount_Price) AS Revenue1, YEAR(Date) AS Year
+FROM Sales
+INNER JOIN DiscountPrice ON Sales.day = DiscountPrice.day
+INNER JOIN Store ON Sales.store_ID = Store.store_ID
+LEFT JOIN City ON Store.city_ID = City.city_ID
+WHERE City.state=$State AND YEAR(Sales.Date) = $Year
+GROUP BY YEAR(Date)
+) AS DiscountRevenue
+JOIN
+(SELECT SUM(Sales.quanlity_sold*Product.regular_price) AS Revenue2,YEAR(Date) AS Year
+FROM Sales
+INNER JOIN DiscountPrice ON Sales.day = DiscountPrice.day
+INNER JOIN Store ON Sales.store_ID = Store.store_ID
+LEFT JOIN City ON Store.city_ID = City.city_ID
+WHERE City.state=$State AND YEAR(Sales.state) = $Year
+GROUP BY YEAR(Date)
+) AS RegularRevenue
+ON DiscountRevenue.Year = RegularRevenue.Year
+) temp
+
+ORDER BY YEAR ASC, Revenue DESC
+;
+

@@ -1,0 +1,65 @@
+SELECT PID, product_name
+FROM Product
+INNER JOIN Product_Category ON Product_Category.PID = Product.PID
+WHERE Product_Category.category_name = “Couches and Sofas”;
+
+SELECT Product.PID AS PID, DiscountPrice.discount_price AS DiscountPrice, Product.regular_price AS RegularPrice
+FROM Product
+INNER JOIN DiscountPrice ON Product.PID = DiscountPrice.PID
+INNER JOIN Product_Category ON Product_Category.PID = Product.PID
+WHERE Category.category_name = “Couches and Sofas”;
+
+
+
+SELECT PID, (TotalNumberOfUnitsSoldwithDiscountPrice + TotalNumberOfUnitsSoldwithRegularPrice) AS TotalNumberOfUnits
+FROM(
+(SELECT Sales_Product.PID, SUM(Sales.quanlity_sold) AS TotalNumberOfUnitsSoldwithDiscountPrice
+FROM Sales
+INNER JOIN Sales_Product ON Sales.saleID = Sales_Product.saleID
+INNER JOIN DiscountPrice ON DiscountPrice.PID = Sales_Product.PID
+INNER JOIN Product_Category ON Product_Category.PID =  Sales_Product.PID
+WHERE Category.category_name = “Couches and Sofas”
+GROUP BY Sales_Product.PID)  AS DiscountPriceSoldQuantity
+JOIN
+(SELECT Sales_Product.PID, SUM(Sales.quanlity_sold) AS TotalNumberOfUnitsSoldwithRegularPrice
+FROM Sales
+INNER JOIN Sales_Product ON Sales.saleID = Sales_Product.saleID
+INNER JOIN Product ON Product.PID = Sales_Product.Product_PID
+INNER JOIN Product_Category ON Product_Category.PID = Product.PID
+WHERE Category.category_name = “Couches and Sofas”
+GROUP BY Sales_Product.PID
+) AS RegularPriceSoldQuantity
+ON RegularPriceSoldQuantity.PID = DiscountPriceSoldQuantity.PID
+)   temp
+;
+
+WITH regular_sold AS
+(SELECT (Revenue1+Revenue2) AS Actual_Revenue
+FROM(
+(SELECT SUM(Sales.quanlity_sold*DiscountPrice.discount_price) AS Revenue1, YEAR(Date) AS Year
+FROM Sales
+INNER JOIN Sales_Product ON Sales.saleID = Sales_Product.saleID
+INNER JOIN DiscountPrice ON DiscountPrice.PID = Sales_Product.Product_PID
+INNER JOIN Product_Category ON Product_Category.PID =  Sales_Product.Product_PID
+WHERE Category.category_name = “Couches and Sofas”) AS temp_table_A
+JOIN
+(SELECT SUM(Sales.quanlity_sold*Product.regular_price) AS Revenue2,YEAR(Date) AS Year
+FROM Sales
+INNER JOIN Sales_Product ON Sales.saleID = Sales_Product.Sales_SaleID
+INNER JOIN Product ON Product.PID = Sales_Product.Product_PID
+INNER JOIN Product_Category ON Product_Category.PID = Product.PID
+WHERE Category.category_name = “Couches and Sofas”) AS AS temp_table_B
+ON AS temp_table_A.Year =AS temp_table_B.Year
+)  temp
+),
+predicted_sold AS
+(SELECT SUM(Sales.quanlity_sold*Product.regular_price*75%) AS Predicted_Revenue
+FROM Sales
+INNER JOIN Sales_Product ON Sales.saleID = Sales_Product.Sales_SaleID
+INNER JOIN Product ON Product.PID = Sales_Product.Product_PID
+INNER JOIN Product_Category ON Product_Category.PID =  Sales_Product.Product_PID
+WHERE Category.category_name = “Couches and Sofas”)
+
+SELECT (Actual_Revenue - Predicted_Revenue) AS diff
+FROM regular_sold, predicted_sold;
+

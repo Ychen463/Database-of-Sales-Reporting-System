@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}View Advertising Campaign Analysis{% endblock %}
+
+{% block content %}
+    
+    <h2 style="text-align: center;">Advertising Campaign Analysis</h2>
+    <div id ="aca_table">
+    <table style="border-collapse: collapse; width: 60%; margin-left: auto;
+  margin-right: auto;" border="1">
+        <tbody>
+        <tr>
+   	 	<th style="width: 20%;">Product ID</th>
+     		<th style="width: 20%;">Product Name</th>
+		<th style="width: 20%;">Sold During Campaign</th>
+		<th style="width: 20%;">Sold Outside Campaign</th>
+		<th style="width: 20%;">Difference</th>
+        </tr>
+	{% for PID, product_name, total_sale_quantity, total_reg_quantity, difference in aca_list %}
+		<tr>
+    		<td style="text-align:center">{{PID}}</td>
+    		<td style="text-align:center">{{product_name}}</td>
+		<td style="text-align:center">{{total_sale_quantity}}</td>
+		<td style="text-align:center">{{total_reg_quantity}}</td>
+		<td style="text-align:center">{{difference}}</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+    </table>
+    </div>
+{% endblock %}

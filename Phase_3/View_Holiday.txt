@@ -1,0 +1,9 @@
+SELECT *
+FROM Holiday;
+
+INSERT INTO Holiday (date, holiday)
+VALUES ($date, $holiday);
+
+SELECT *
+FROM Holiday
+WHERE date = $date;

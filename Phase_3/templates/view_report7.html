@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Childcare Sales Volume{% endblock %}
+
+{% block content %}
+    
+    <h2 style="text-align: center;">Childcare Sales Volume</h2>
+    <div id ="pop_table">
+    <table style="border-collapse: collapse; width: 60%; margin-left: auto;
+  margin-right: auto;" border="1">
+        <tbody>
+        <tr>
+        <th style="width: 7%;">Month</th>
+        {% for c in clevel %}
+        <th style="width: 7%;">{{c}}</th>
+        {% endfor %}
+        </tr>
+	{% for i in res_list %}
+		<tr>
+        	<td style="text-align:center">{{ i[0] }}</td>
+            {% for c in i[1:] %}
+        	<td style="text-align:center">{{c}}</td>
+            {% endfor %}
+    		</tr>
+	{% endfor %}
+	</tbody>
+     </table>
+     </div>
+    <br></br>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+SELECT Year(Date) AND Month(Date)
+FROM Day;
+
+WITH state_sale AS(
+SELECT Product_Category.category_name as category_name, SUM(Sales.quantity_sold) as state_total_sold, City.state
+FROM Store
+INNER JOIN City ON Store.city_name = City.city_name
+INNER JOIN Sales ON Store.store_ID = Sales.store_ID
+INNER JOIN Sales_Product ON Sales.saleID = Sales_Product.saleID
+INNER JOIN Product_Category ON Sales_Product.PID = Product_Category.PID
+WHERE Year(Date) = $Year AND Month(Date) = $Month
+GROUP BY City.state, Product_Category.category_name),
+store_sale AS(
+SELECT Store.store_ID, Product_Category.category_name AS category_name, SUM(Sales.quantity_sold) AS store_total_sold
+FROM Store
+INNER JOIN Sales ON Store.store_ID = Sales.store_ID
+INNER JOIN Sales_Product ON Sales.saleID = Sales_Product.saleID
+INNER JOIN Product_Category ON Sales_Product.PID = Product_Category.PID
+WHERE Year(Date) = $Year AND Month(Date) = $Month
+GROUP BY Store.store_ID, Product_Category.category_name)
+
+SELECT category_name, state
+FROM (state_sale
+LEFT JOIN store_sale ON state_sale.category_name = store_sale.category_name
+Where (category_name, state_total_sold) IN (SELECT category_name, MAX(state_total_sold) FROM state_sale GROUP BY category_name)) temp
+ORDER BY catogory_name ASC;
+
+
+
+
